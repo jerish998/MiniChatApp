@@ -1,12 +1,27 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
+interface Message {
+  user: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [FormsModule],  // ✅ Include FormsModule here
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'MiniChatUI';
+  user = '';
+  message = '';
+  messages: Message[] = [];
+
+  sendMessage() {
+    if (this.user && this.message) {
+      this.messages.push({ user: this.user, text: this.message });
+      this.message = '';
+    }
+  }
 }
